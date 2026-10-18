@@ -13,9 +13,13 @@ ExecutorImpl::ExecutorImpl(const Pose& initialPose) noexcept : pose(initialPose)
 {
 }
 
-void ExecutorImpl::Execute(const std::string&) noexcept
+void ExecutorImpl::Execute(const std::string& commands) noexcept
 {
-    // 用例 1 尚未涉及移动和转向指令
+    for (const auto command : commands) {
+        if (command == 'M' && pose.heading == 'E') {
+            ++pose.x;
+        }
+    }
 }
 
 Pose ExecutorImpl::Query() const noexcept
