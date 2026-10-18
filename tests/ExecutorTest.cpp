@@ -162,4 +162,16 @@ TEST(ExecutorTest, should_return_facing_N_given_command_is_R_and_facing_is_W)
     const Pose expected{0, 0, 'N'};
     ASSERT_EQ(expected, executor->Query());
 }
+
+TEST(ExecutorTest, should_return_facing_E_given_command_is_R_and_facing_is_N)
+{
+    // 初始位置为 (0, 0)，朝向北 N
+    std::unique_ptr<Executor> executor(Executor::NewExecutor({0, 0, 'N'}));
+
+    executor->Execute("R");
+
+    // 向右转后朝向东 E，位置不变
+    const Pose expected{0, 0, 'E'};
+    ASSERT_EQ(expected, executor->Query());
+}
 }  // namespace adas
