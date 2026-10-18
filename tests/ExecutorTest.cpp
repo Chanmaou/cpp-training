@@ -42,4 +42,16 @@ TEST(ExecutorTest, should_return_x_plus_1_given_command_is_M_and_facing_is_E)
     const Pose expected{1, 0, 'E'};
     ASSERT_EQ(expected, executor->Query());
 }
+
+TEST(ExecutorTest, should_return_x_minus_1_given_command_is_M_and_facing_is_W)
+{
+    // 初始位置为 (0, 0)，朝向西 W
+    std::unique_ptr<Executor> executor(Executor::NewExecutor({0, 0, 'W'}));
+
+    executor->Execute("M");
+
+    // 向西前进一步，横坐标减少 1，朝向保持不变
+    const Pose expected{-1, 0, 'W'};
+    ASSERT_EQ(expected, executor->Query());
+}
 }  // namespace adas
