@@ -21,27 +21,11 @@ void ExecutorImpl::Execute(const std::string& commands) noexcept
         } else if (command == 'M') {
             const int steps = fast ? 2 : 1;
             for (int step = 0; step < steps; ++step) {
-                if (pose.heading == 'E') {
-                    ++pose.x;
-                } else if (pose.heading == 'W') {
-                    --pose.x;
-                } else if (pose.heading == 'N') {
-                    ++pose.y;
-                } else if (pose.heading == 'S') {
-                    --pose.y;
-                }
+                Move();
             }
         } else if (command == 'L') {
             if (fast) {
-                if (pose.heading == 'E') {
-                    ++pose.x;
-                } else if (pose.heading == 'W') {
-                    --pose.x;
-                } else if (pose.heading == 'N') {
-                    ++pose.y;
-                } else if (pose.heading == 'S') {
-                    --pose.y;
-                }
+                Move();
             }
             if (pose.heading == 'E') {
                 pose.heading = 'N';
@@ -54,15 +38,7 @@ void ExecutorImpl::Execute(const std::string& commands) noexcept
             }
         } else if (command == 'R') {
             if (fast) {
-                if (pose.heading == 'E') {
-                    ++pose.x;
-                } else if (pose.heading == 'W') {
-                    --pose.x;
-                } else if (pose.heading == 'N') {
-                    ++pose.y;
-                } else if (pose.heading == 'S') {
-                    --pose.y;
-                }
+                Move();
             }
             if (pose.heading == 'E') {
                 pose.heading = 'S';
@@ -74,6 +50,19 @@ void ExecutorImpl::Execute(const std::string& commands) noexcept
                 pose.heading = 'E';
             }
         }
+    }
+}
+
+void ExecutorImpl::Move() noexcept
+{
+    if (pose.heading == 'E') {
+        ++pose.x;
+    } else if (pose.heading == 'W') {
+        --pose.x;
+    } else if (pose.heading == 'N') {
+        ++pose.y;
+    } else if (pose.heading == 'S') {
+        --pose.y;
     }
 }
 
