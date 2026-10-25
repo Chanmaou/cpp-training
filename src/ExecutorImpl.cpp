@@ -17,16 +17,17 @@ ExecutorImpl::ExecutorImpl(const Pose& initialPose) noexcept : pose(initialPose)
 void ExecutorImpl::Execute(const std::string& commands) noexcept
 {
     for (const auto command : commands) {
+        std::unique_ptr<ICommand> commandObject;
         if (command == 'F') {
             fast = !fast;
         } else if (command == 'M') {
-            std::unique_ptr<MoveCommand> commandObject = std::make_unique<MoveCommand>();
-            commandObject->DoOperate(*this);
+            commandObject = std::make_unique<MoveCommand>();
         } else if (command == 'L') {
-            std::unique_ptr<TurnLeftCommand> commandObject = std::make_unique<TurnLeftCommand>();
-            commandObject->DoOperate(*this);
+            commandObject = std::make_unique<TurnLeftCommand>();
         } else if (command == 'R') {
-            std::unique_ptr<TurnRightCommand> commandObject = std::make_unique<TurnRightCommand>();
+            commandObject = std::make_unique<TurnRightCommand>();
+        }
+        if (commandObject) {
             commandObject->DoOperate(*this);
         }
     }
