@@ -45,4 +45,16 @@ TEST(ExecutorFastTest, should_return_S_and_x_plus_1_given_status_is_fast_given_c
     const Pose expected{1, 0, 'S'};
     ASSERT_EQ(expected, executor->Query());
 }
+
+TEST(ExecutorFastTest, should_return_y_plus_1_given_command_is_FFM_and_facing_is_N)
+{
+    // 使用默认初始位置 (0, 0)，朝北
+    std::unique_ptr<Executor> executor(Executor::NewExecutor());
+
+    // 第一次 F 开启加速，第二次 F 取消加速，再前进一步
+    executor->Execute("FFM");
+
+    const Pose expected{0, 1, 'N'};
+    ASSERT_EQ(expected, executor->Query());
+}
 }  // namespace adas
