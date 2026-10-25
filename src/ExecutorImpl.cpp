@@ -19,7 +19,7 @@ void ExecutorImpl::Execute(const std::string& commands) noexcept
     for (const auto command : commands) {
         std::unique_ptr<ICommand> commandObject;
         if (command == 'F') {
-            fast = !fast;
+            commandObject = std::make_unique<FastCommand>();
         } else if (command == 'M') {
             commandObject = std::make_unique<MoveCommand>();
         } else if (command == 'L') {
@@ -70,6 +70,16 @@ void ExecutorImpl::TurnRight() noexcept
     } else if (pose.heading == 'N') {
         pose.heading = 'E';
     }
+}
+
+void ExecutorImpl::Fast() noexcept
+{
+    fast = !fast;
+}
+
+bool ExecutorImpl::IsFast() const noexcept
+{
+    return fast;
 }
 
 Pose ExecutorImpl::Query() const noexcept
