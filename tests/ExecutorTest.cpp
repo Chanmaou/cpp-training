@@ -186,4 +186,16 @@ TEST(ExecutorTest, should_execute_multiple_move_and_turn_commands_in_order)
     const Pose expected{2, -1, 'E'};
     ASSERT_EQ(expected, executor->Query());
 }
+TEST(ExecutorFastTest, should_return_x_plus_2_given_status_is_fast_command_is_M_and_facing_is_E)
+{
+    // 初始位置为原点，朝东
+    std::unique_ptr<Executor> executor(Executor::NewExecutor({0, 0, 'E'}));
+
+    // 开启加速，再向前移动
+    executor->Execute("FM");
+
+    // 加速时应向东前进两格
+    const Pose expected{2, 0, 'E'};
+    ASSERT_EQ(expected, executor->Query());
+}
 }  // namespace adas
