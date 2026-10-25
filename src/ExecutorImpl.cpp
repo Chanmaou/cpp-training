@@ -1,5 +1,6 @@
 #include "ExecutorImpl.hpp"
 
+#include <memory>
 #include <new>
 
 namespace adas
@@ -19,10 +20,8 @@ void ExecutorImpl::Execute(const std::string& commands) noexcept
         if (command == 'F') {
             fast = !fast;
         } else if (command == 'M') {
-            const int steps = fast ? 2 : 1;
-            for (int step = 0; step < steps; ++step) {
-                Move();
-            }
+            std::unique_ptr<MoveCommand> commandObject = std::make_unique<MoveCommand>();
+            commandObject->DoOperate(*this);
         } else if (command == 'L') {
             if (fast) {
                 Move();
