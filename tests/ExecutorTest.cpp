@@ -198,4 +198,17 @@ TEST(ExecutorFastTest, should_return_x_plus_2_given_status_is_fast_command_is_M_
     const Pose expected{2, 0, 'E'};
     ASSERT_EQ(expected, executor->Query());
 }
+
+TEST(ExecutorFastTest, should_return_N_and_x_plus_1_given_status_is_fast_command_is_L_and_facing_is_E)
+{
+    // 初始位置为原点，朝东
+    std::unique_ptr<Executor> executor(Executor::NewExecutor({0, 0, 'E'}));
+
+    // 开启加速，再执行左转指令
+    executor->Execute("FL");
+
+    // 加速左转应先向东前进一步，再转向北
+    const Pose expected{1, 0, 'N'};
+    ASSERT_EQ(expected, executor->Query());
+}
 }  // namespace adas

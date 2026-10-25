@@ -32,6 +32,17 @@ void ExecutorImpl::Execute(const std::string& commands) noexcept
                 }
             }
         } else if (command == 'L') {
+            if (fast) {
+                if (pose.heading == 'E') {
+                    ++pose.x;
+                } else if (pose.heading == 'W') {
+                    --pose.x;
+                } else if (pose.heading == 'N') {
+                    ++pose.y;
+                } else if (pose.heading == 'S') {
+                    --pose.y;
+                }
+            }
             if (pose.heading == 'E') {
                 pose.heading = 'N';
             } else if (pose.heading == 'N') {
