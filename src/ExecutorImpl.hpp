@@ -46,6 +46,18 @@ private:
         }
     };
 
+    class TurnRightCommand final
+    {
+    public:
+        void DoOperate(ExecutorImpl& executor) const noexcept
+        {
+            if (executor.fast) {
+                executor.Move();
+            }
+            executor.TurnRight();
+        }
+    };
+
 private:
     Pose pose;
     bool fast{false};
