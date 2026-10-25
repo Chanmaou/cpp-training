@@ -23,10 +23,8 @@ void ExecutorImpl::Execute(const std::string& commands) noexcept
             std::unique_ptr<MoveCommand> commandObject = std::make_unique<MoveCommand>();
             commandObject->DoOperate(*this);
         } else if (command == 'L') {
-            if (fast) {
-                Move();
-            }
-            TurnLeft();
+            std::unique_ptr<TurnLeftCommand> commandObject = std::make_unique<TurnLeftCommand>();
+            commandObject->DoOperate(*this);
         } else if (command == 'R') {
             if (fast) {
                 Move();
