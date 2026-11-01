@@ -20,10 +20,8 @@ ExecutorImpl::ExecutorImpl(const Pose& initialPose) noexcept : poseHandler(initi
 void ExecutorImpl::Execute(const std::string& commands) noexcept
 {
     const std::unordered_map<char, std::function<void(PoseHandler&)>> commandMap{
-        {'M', MoveCommand()},
-        {'L', TurnLeftCommand()},
-        {'R', TurnRightCommand()},
-        {'F', FastCommand()},
+        {'M', MoveCommand()}, {'L', TurnLeftCommand()}, {'R', TurnRightCommand()},
+        {'F', FastCommand()}, {'B', ReverseCommand()},
     };
 
     for (const auto command : commands) {

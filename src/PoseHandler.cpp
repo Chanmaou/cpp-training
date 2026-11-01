@@ -8,14 +8,16 @@ PoseHandler::PoseHandler(const Pose& initialPose) noexcept : pose(initialPose)
 
 void PoseHandler::Move() noexcept
 {
+    const int step = reverse ? -1 : 1;
+
     if (pose.heading == 'E') {
-        ++pose.x;
+        pose.x += step;
     } else if (pose.heading == 'W') {
-        --pose.x;
+        pose.x -= step;
     } else if (pose.heading == 'N') {
-        ++pose.y;
+        pose.y += step;
     } else if (pose.heading == 'S') {
-        --pose.y;
+        pose.y -= step;
     }
 }
 
@@ -53,6 +55,16 @@ void PoseHandler::Fast() noexcept
 bool PoseHandler::IsFast() const noexcept
 {
     return fast;
+}
+
+void PoseHandler::Reverse() noexcept
+{
+    reverse = !reverse;
+}
+
+bool PoseHandler::IsReverse() const noexcept
+{
+    return reverse;
 }
 
 Pose PoseHandler::Query() const noexcept
