@@ -4,17 +4,10 @@
 
 namespace adas
 {
-class ICommand
+class MoveCommand final
 {
 public:
-    virtual ~ICommand() = default;
-    virtual void DoOperate(PoseHandler& poseHandler) const noexcept = 0;
-};
-
-class MoveCommand final : public ICommand
-{
-public:
-    void DoOperate(PoseHandler& poseHandler) const noexcept override
+    void operator()(PoseHandler& poseHandler) const noexcept
     {
         if (poseHandler.IsFast()) {
             poseHandler.Move();
@@ -23,10 +16,10 @@ public:
     }
 };
 
-class TurnLeftCommand final : public ICommand
+class TurnLeftCommand final
 {
 public:
-    void DoOperate(PoseHandler& poseHandler) const noexcept override
+    void operator()(PoseHandler& poseHandler) const noexcept
     {
         if (poseHandler.IsFast()) {
             poseHandler.Move();
@@ -35,10 +28,10 @@ public:
     }
 };
 
-class TurnRightCommand final : public ICommand
+class TurnRightCommand final
 {
 public:
-    void DoOperate(PoseHandler& poseHandler) const noexcept override
+    void operator()(PoseHandler& poseHandler) const noexcept
     {
         if (poseHandler.IsFast()) {
             poseHandler.Move();
@@ -47,10 +40,10 @@ public:
     }
 };
 
-class FastCommand final : public ICommand
+class FastCommand final
 {
 public:
-    void DoOperate(PoseHandler& poseHandler) const noexcept override
+    void operator()(PoseHandler& poseHandler) const noexcept
     {
         poseHandler.Fast();
     }
