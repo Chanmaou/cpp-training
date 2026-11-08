@@ -13,6 +13,8 @@ public:
     PoseHandler& operator=(const PoseHandler&) = delete;
 
     void Move() noexcept;
+    void Forward() noexcept;
+    void Backward() noexcept;
     void TurnLeft() noexcept;
     void TurnRight() noexcept;
     void Fast() noexcept;
@@ -22,6 +24,8 @@ public:
     Pose Query() const noexcept;
 
 private:
+    void MoveOneStep(int step) noexcept;
+
     Pose pose;
     bool fast{false};
     bool reverse{false};

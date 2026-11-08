@@ -20,7 +20,7 @@ void ExecutorImpl::Execute(const std::string& commands) noexcept
 {
     const auto cmders = Singleton<CmderFactory>::Instance().GetCmders(commands);
     for (const auto& cmder : cmders) {
-        cmder(poseHandler);
+        cmder(poseHandler).DoOperate(poseHandler);
     }
 }
 

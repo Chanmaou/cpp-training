@@ -8,8 +8,21 @@ PoseHandler::PoseHandler(const Pose& initialPose) noexcept : pose(initialPose)
 
 void PoseHandler::Move() noexcept
 {
-    const int step = reverse ? -1 : 1;
+    MoveOneStep(reverse ? -1 : 1);
+}
 
+void PoseHandler::Forward() noexcept
+{
+    MoveOneStep(1);
+}
+
+void PoseHandler::Backward() noexcept
+{
+    MoveOneStep(-1);
+}
+
+void PoseHandler::MoveOneStep(int step) noexcept
+{
     if (pose.heading == 'E') {
         pose.x += step;
     } else if (pose.heading == 'W') {

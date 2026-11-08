@@ -1,70 +1,71 @@
 #pragma once
 
-#include "PoseHandler.hpp"
+#include "ActionGroup.hpp"
 
 namespace adas
 {
 class MoveCommand final
 {
 public:
-    void operator()(PoseHandler& poseHandler) const noexcept
+    ActionGroup operator()(const PoseHandler& poseHandler) const noexcept
     {
+        ActionGroup group;
+        const auto move = poseHandler.IsReverse() ? ActionType::Backward : ActionType::Forward;
         if (poseHandler.IsFast()) {
-            poseHandler.Move();
+            group.PushAction(move);
         }
-        poseHandler.Move();
+        group.PushAction(move);
+        return group;
     }
 };
 
 class TurnLeftCommand final
 {
 public:
-    void operator()(PoseHandler& poseHandler) const noexcept
+    ActionGroup operator()(const PoseHandler& poseHandler) const noexcept
     {
+        ActionGroup group;
         if (poseHandler.IsFast()) {
-            poseHandler.Move();
+            const auto move = poseHandler.IsReverse() ? ActionType::Backward : ActionType::Forward;
+            group.PushAction(move);
         }
-
-        if (poseHandler.IsReverse()) {
-            poseHandler.TurnRight();
-        } else {
-            poseHandler.TurnLeft();
-        }
+        const auto turn = poseHandler.IsReverse() ? ActionType::TurnRight : ActionType::TurnLeft;
+        group.PushAction(turn);
+        return group;
     }
 };
 
 class TurnRightCommand final
 {
 public:
-    void operator()(PoseHandler& poseHandler) const noexcept
+    ActionGroup operator()(const PoseHandler& poseHandler) const noexcept
     {
+        ActionGroup group;
         if (poseHandler.IsFast()) {
-            poseHandler.Move();
+            const auto move = poseHandler.IsReverse() ? ActionType::Backward : ActionType::Forward;
+            group.PushAction(move);
         }
-
-        if (poseHandler.IsReverse()) {
-            poseHandler.TurnLeft();
-        } else {
-            poseHandler.TurnRight();
-        }
+        const auto turn = poseHandler.IsReverse() ? ActionType::TurnLeft : ActionType::TurnRight;
+        group.PushAction(turn);
+        return group;
     }
 };
 
 class FastCommand final
 {
 public:
-    void operator()(PoseHandler& poseHandler) const noexcept
+    ActionGroup operator()(const PoseHandler&) const noexcept
     {
-        poseHandler.Fast();
+        return ActionGroup({ActionType::ToggleFast});
     }
 };
 
 class ReverseCommand final
 {
 public:
-    void operator()(PoseHandler& poseHandler) const noexcept
+    ActionGroup operator()(const PoseHandler&) const noexcept
     {
-        poseHandler.Reverse();
+        return ActionGroup({ActionType::ToggleReverse});
     }
 };
-}  // namespace adas
+}
