@@ -6,6 +6,7 @@
 #include <unordered_map>
 
 #include "Command.hpp"
+#include "TurnRoundCommand.hpp"
 
 namespace adas
 {
@@ -24,9 +25,11 @@ public:
     CmderList GetCmders(const std::string& commands) const noexcept;
 
 private:
+    std::string ParseCommandString(const std::string& commands) const noexcept;
+
     const std::unordered_map<char, Cmder> cmderMap{
         {'M', MoveCommand()}, {'L', TurnLeftCommand()}, {'R', TurnRightCommand()},
-        {'F', FastCommand()}, {'B', ReverseCommand()},
+        {'F', FastCommand()}, {'B', ReverseCommand()},  {'Z', TurnRoundCommand()},
     };
 };
 }  // namespace adas
