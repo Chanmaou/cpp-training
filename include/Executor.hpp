@@ -10,12 +10,15 @@ struct Pose {
     char heading;
 };
 
+enum class VehicleType {
+    Normal,
+    SportsCar,
+};
+
 class Executor
 {
 public:
-    // 使用完后由调用者负责删除返回的对象
-    static Executor* NewExecutor(const Pose& pose = {0, 0, 'N'}) noexcept;
-
+    static Executor* NewExecutor(const Pose& pose = {0, 0, 'N'}, VehicleType type = VehicleType::Normal) noexcept;
     Executor() = default;
     virtual ~Executor() = default;
 

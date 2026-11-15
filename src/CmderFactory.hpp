@@ -6,12 +6,15 @@
 #include <unordered_map>
 
 #include "Command.hpp"
+#include "Executor.hpp"
+#include "SportsCarCommand.hpp"
 #include "TurnRoundCommand.hpp"
 
 namespace adas
 {
 using Cmder = std::function<ActionGroup(const PoseHandler&)>;
 using CmderList = std::list<Cmder>;
+using CmderMap = std::unordered_map<char, Cmder>;
 
 class CmderFactory final
 {
@@ -22,14 +25,19 @@ public:
     CmderFactory(const CmderFactory&) = delete;
     CmderFactory& operator=(const CmderFactory&) = delete;
 
-    CmderList GetCmders(const std::string& commands) const noexcept;
+    CmderList GetCmders(const std::string& commands, VehicleType type) const noexcept;
 
 private:
     std::string ParseCommandString(const std::string& commands) const noexcept;
 
-    const std::unordered_map<char, Cmder> cmderMap{
+    const CmderMap normalMap{
         {'M', MoveCommand()}, {'L', TurnLeftCommand()}, {'R', TurnRightCommand()},
         {'F', FastCommand()}, {'B', ReverseCommand()},  {'Z', TurnRoundCommand()},
+    };
+
+    const CmderMap sportsCarMap{
+        {'M', SportsCarMoveCommand()}, {'L', SportsCarTurnLeftCommand()}, {'R', SportsCarTurnRightCommand()},
+        {'F', FastCommand()},          {'B', ReverseCommand()},           {'Z', TurnRoundCommand()},
     };
 };
 }  // namespace adas
