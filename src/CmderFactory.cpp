@@ -4,11 +4,22 @@ namespace adas
 {
 CmderList CmderFactory::GetCmders(const std::string& commands, VehicleType type) const noexcept
 {
-    const auto& commandMap = type == VehicleType::SportsCar ? sportsCarMap : normalMap;
+    const CmderMap* commandMap = &normalMap;
+    switch (type) {
+    case VehicleType::Normal:
+        break;
+    case VehicleType::SportsCar:
+        commandMap = &sportsCarMap;
+        break;
+    case VehicleType::Bus:
+        commandMap = &busMap;
+        break;
+    }
+
     CmderList cmders;
     for (const auto command : ParseCommandString(commands)) {
-        const auto it = commandMap.find(command);
-        if (it != commandMap.end()) {
+        const auto it = commandMap->find(command);
+        if (it != commandMap->end()) {
             cmders.push_back(it->second);
         }
     }

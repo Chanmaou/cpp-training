@@ -13,6 +13,7 @@ struct Pose {
 enum class VehicleType {
     Normal,
     SportsCar,
+    Bus,
 };
 
 class Executor

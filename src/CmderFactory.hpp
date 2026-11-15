@@ -5,6 +5,7 @@
 #include <string>
 #include <unordered_map>
 
+#include "BusCommand.hpp"
 #include "Command.hpp"
 #include "Executor.hpp"
 #include "SportsCarCommand.hpp"
@@ -38,6 +39,15 @@ private:
     const CmderMap sportsCarMap{
         {'M', SportsCarMoveCommand()}, {'L', SportsCarTurnLeftCommand()}, {'R', SportsCarTurnRightCommand()},
         {'F', FastCommand()},          {'B', ReverseCommand()},           {'Z', TurnRoundCommand()},
+    };
+
+    const CmderMap busMap{
+        {'M', MoveCommand()},
+        {'L', BusTurnCommand(ActionType::TurnLeft, ActionType::TurnRight)},
+        {'R', BusTurnCommand(ActionType::TurnRight, ActionType::TurnLeft)},
+        {'F', FastCommand()},
+        {'B', ReverseCommand()},
+        {'Z', TurnRoundCommand()},
     };
 };
 }  // namespace adas
