@@ -1,10 +1,11 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.10)
+project(cpp_training_labs LANGUAGES C CXX)
 
-PROJECT(cpp-training VERSION 0.1.0)
+set(EXPERIMENT "4" CACHE STRING "Experiment number (0 to 4)")
+set_property(CACHE EXPERIMENT PROPERTY STRINGS 0 1 2 3 4)
+if(NOT EXPERIMENT MATCHES "^[0-4]$")
+    message(FATAL_ERROR "EXPERIMENT must be a number from 0 to 4")
+endif()
 
-SET(CMAKE_CXX_STANDARD 17)
-SET(CMAKE_CXX_FLAGS "-Wno-deprecated-declarations -Wall -Werror -Wnon-virtual-dtor -Woverloaded-virtual")
-
-ENABLE_TESTING()
-ADD_SUBDIRECTORY(src)
-ADD_SUBDIRECTORY(tests)
+enable_testing()
+add_subdirectory("experiment${EXPERIMENT}")
